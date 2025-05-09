@@ -1,322 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Network Finder</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Network Finder</title>
 
-  <!-- Google Analytics (заміни G-XXXXXXX на свій код) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-NE8F2NDDE7');
-  </script>
-</head>
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Network Finder</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0b0c10;
-      color: white;
-      font-family: sans-serif;
-      overflow-x: hidden;
-    }
-    canvas#comet-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-    }
-    header {
-      padding: 1rem;
-      text-align: center;
-    }
-    .language-switcher button {
-      margin: 0.2rem;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      background: #1f1f1f;
-      color: white;
-      transition: background 0.3s;
-    }
-    .language-switcher button:hover {
-      background: #333;
-    }
-    .search-bar {
-      margin: 1rem auto;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .search-bar input {
-      padding: 0.7rem;
-      width: 300px;
-      border-radius: 10px;
-      border: none;
-      margin-bottom: 1rem;
-    }
-    .filters {
-      margin: 1rem;
-      text-align: center;
-    }
-    .gray-box {
-      background: #1e1e1e;
-      margin: 1rem auto;
-      padding: 1rem;
-      border-radius: 10px;
-      max-width: 1000px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-    }
-    .card {
-      background: #2c2f33;
-      padding: 1rem;
-      border-radius: 10px;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      cursor: pointer;
-    }
-    .card:hover {
-      transform: scale(1.05);
-      background: #3a3f44;
-    }
-    .card.fade-in {
-      opacity: 0;
-      animation: fadeIn 0.8s forwards;
-    }
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
+    <!-- Google Analytics (заміни G-XXXXXXX на свій код) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
       }
-    }
-    .rating {
-      margin-top: 0.5rem;
-      color: gold;
-    }
-  </style>
-</head>
-<body>
-  <canvas id="comet-canvas"></canvas>
-  <header>
-    <div class="language-switcher">
-      <button data-lang="en">English</button>
-      <button data-lang="de">Deutsch</button>
-      <button data-lang="uk">Українська</button>
-      <button data-lang="fr">Français</button>
-      <button data-lang="zh">中文</button>
-      <button data-lang="ja">日本語</button>
-    </div>
-    <h1 id="title">AI Network Finder</h1>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search neural networks..." />
-    </div>
-    <div class="filters">
-      <label><input type="checkbox" id="freeOnly" /> Free only</label>
-      <label><input type="checkbox" id="paidOnly" /> Paid only</label>
-    </div>
-  </header>
+      gtag('js', new Date());
+      gtag('config', 'G-NE8F2NDDE7');
+    </script>
 
-  <main>
-    <section id="popular" class="gray-box">
-      <h2>Most Popular Neural Networks</h2>
-      <div id="networkList" class="grid"></div>
-    </section>
-  </main>
+    <style>
+      body {
+        margin: 0;
+        background: #0b0c10;
+        color: white;
+        font-family: sans-serif;
+        overflow-x: hidden;
+      }
+      header {
+        padding: 1rem;
+        text-align: center;
+      }
+      .language-switcher button {
+        margin: 0.2rem;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background: #1f1f1f;
+        color: white;
+        transition: background 0.3s;
+      }
+      .language-switcher button:hover {
+        background: #333;
+      }
+      .search-bar {
+        margin: 1rem auto;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .search-bar input {
+        padding: 0.7rem;
+        width: 300px;
+        border-radius: 10px;
+        border: none;
+        margin-bottom: 1rem;
+      }
+      .filters {
+        margin: 1rem;
+        text-align: center;
+      }
+      .gray-box {
+        background: #1e1e1e;
+        margin: 1rem auto;
+        padding: 1rem;
+        border-radius: 10px;
+        max-width: 1000px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+      }
+      .card {
+        background: #2c2f33;
+        padding: 1rem;
+        border-radius: 10px;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        cursor: pointer;
+      }
+      .card:hover {
+        transform: scale(1.05);
+        background: #3a3f44;
+      }
+      .card.fade-in {
+        opacity: 0;
+        animation: fadeIn 0.8s forwards;
+      }
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      .rating {
+        margin-top: 0.5rem;
+        color: gold;
+      }
+      .category-filter {
+        margin: 1rem;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+      .category-filter select {
+        padding: 0.5rem;
+        border-radius: 5px;
+        background: #1f1f1f;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="language-switcher">
+        <button data-lang="en">English</button>
+        <button data-lang="de">Deutsch</button>
+        <button data-lang="uk">Українська</button>
+        <button data-lang="fr">Français</button>
+        <button data-lang="zh">中文</button>
+        <button data-lang="ja">日本語</button>
+      </div>
+      <h1 id="title">AI Network Finder</h1>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search neural networks..." />
+      </div>
+      <div class="filters">
+        <label><input type="checkbox" id="freeOnly" /> Free only</label>
+        <label><input type="checkbox" id="paidOnly" /> Paid only</label>
+      </div>
+      <div class="category-filter">
+        <select id="categoryFilter">
+          <option value="">Select Category</option>
+          <option value="text">Text</option>
+          <option value="image">Image</option>
+          <option value="video">Video</option>
+          <option value="audio">Audio</option>
+          <option value="chatbot">Chatbot</option>
+          <option value="productivity">Productivity</option>
+          <option value="moodboard">Moodboard</option>
+          <option value="design">Design</option>
+          <option value="hardware">Hardware</option>
+          <option value="AI Research">AI Research</option>
+        </select>
+      </div>
+    </header>
 
-  <script>
-    const canvas = document.getElementById('comet-canvas');
-    const ctx = canvas.getContext('2d');
-    let comets = [];
+    <main>
+      <section id="popular" class="gray-box">
+        <h2>Most Popular Neural Networks</h2>
+        <div id="networkList" class="grid"></div>
+      </section>
+    </main>
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
+    <script>
+      const networks = [
+        { name: "ChatGPT", category: "text", url: "https://chat.openai.com", free: true, rating: 5 },
+        { name: "DALL·E", category: "image", url: "https://openai.com/dall-e", free: true, rating: 5 },
+        { name: "Midjourney", category: "image", url: "https://www.midjourney.com", free: false, rating: 5 },
+        { name: "Runway ML", category: "video", url: "https://runwayml.com", free: false, rating: 4 },
+        { name: "Descript", category: "audio", url: "https://www.descript.com", free: false, rating: 4 },
+        { name: "Replika", category: "chatbot", url: "https://replika.ai", free: true, rating: 4 },
+        { name: "Jasper", category: "text", url: "https://www.jasper.ai", free: false, rating: 5 },
+        { name: "Synthesia", category: "video", url: "https://www.synthesia.io", free: false, rating: 4 },
+        { name: "Soundraw", category: "audio", url: "https://soundraw.io", free: false, rating: 4 },
+        { name: "Copy.ai", category: "text", url: "https://www.copy.ai", free: true, rating: 4 }
+      ];
 
-    function createComets(count) {
-      for (let i = 0; i < count; i++) {
-        comets.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          speed: 2 + Math.random() * 4,
-          size: 1 + Math.random() * 2,
+      function filterNetworks() {
+        const searchInput = document.getElementById("searchInput").value.toLowerCase();
+        const freeOnly = document.getElementById("freeOnly").checked;
+        const paidOnly = document.getElementById("paidOnly").checked;
+        const categoryFilter = document.getElementById("categoryFilter").value;
+
+        const filteredNetworks = networks.filter((network) => {
+          const matchesSearch = network.name.toLowerCase().includes(searchInput);
+          const matchesCategory = categoryFilter ? network.category === categoryFilter : true;
+          const matchesFree = freeOnly ? network.free : true;
+          const matchesPaid = paidOnly ? !network.free : true;
+          return matchesSearch && matchesCategory && matchesFree && matchesPaid;
+        });
+
+        displayNetworks(filteredNetworks);
+      }
+
+      function displayNetworks(networks) {
+        const networkList = document.getElementById("networkList");
+        networkList.innerHTML = "";
+        networks.forEach((network) => {
+          const card = document.createElement("div");
+          card.classList.add("card");
+          card.innerHTML = `
+            <h3><a href="${network.url}" target="_blank">${network.name}</a></h3>
+            <p>Category: ${network.category}</p>
+            <p>Rating: ${"★".repeat(network.rating)}${"☆".repeat(5 - network.rating)}</p>
+          `;
+          networkList.appendChild(card);
         });
       }
-    }
 
-    function drawComets() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = 'white';
-      ctx.shadowColor = 'white';
-      ctx.shadowBlur = 10;
-      comets.forEach((c) => {
-        ctx.beginPath();
-        ctx.arc(c.x, c.y, c.size, 0, 2 * Math.PI);
-        ctx.fill();
-        c.y += c.speed;
-        if (c.y > canvas.height) {
-          c.y = -10;
-          c.x = Math.random() * canvas.width;
-        }
-      });
-    }
+      document.getElementById("searchInput").addEventListener("input", filterNetworks);
+      document.getElementById("freeOnly").addEventListener("change", filterNetworks);
+      document.getElementById("paidOnly").addEventListener("change", filterNetworks);
+      document.getElementById("categoryFilter").addEventListener("change", filterNetworks);
 
-    function animate() {
-      drawComets();
-      requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    createComets(100);
-    animate();
-
-    const networks = [
-  {name: "ChatGPT", category: "text", url: "https://chat.openai.com", free: true, rating: 5},
-  {name: "DALL·E", category: "image", url: "https://openai.com/dall-e", free: true, rating: 5},
-  {name: "Midjourney", category: "image", url: "https://www.midjourney.com", free: false, rating: 5},
-  {name: "Runway ML", category: "video", url: "https://runwayml.com", free: false, rating: 4},
-  {name: "Descript", category: "audio", url: "https://www.descript.com", free: false, rating: 4},
-  {name: "ElevenLabs", category: "audio", url: "https://www.elevenlabs.io", free: false, rating: 4},
-  {name: "Replika", category: "chatbot", url: "https://replika.ai", free: true, rating: 4},
-  {name: "Copy.ai", category: "text", url: "https://www.copy.ai", free: true, rating: 4},
-  {name: "Jasper", category: "text", url: "https://www.jasper.ai", free: false, rating: 5},
-  {name: "Synthesia", category: "video", url: "https://www.synthesia.io", free: false, rating: 4},
-  {name: "Soundraw", category: "audio", url: "https://soundraw.io", free: false, rating: 4},
-  {name: "Pictory", category: "video", url: "https://pictory.ai", free: false, rating: 4},
-  {name: "Lumen5", category: "video", url: "https://lumen5.com", free: false, rating: 4},
-  {name: "Play.ht", category: "audio", url: "https://play.ht", free: false, rating: 4},
-  {name: "DeepL", category: "text", url: "https://www.deepl.com", free: true, rating: 5},
-  {name: "Tome", category: "text", url: "https://tome.app", free: true, rating: 4},
-  {name: "Notion AI", category: "productivity", url: "https://www.notion.so/product/ai", free: true, rating: 5},
-  {name: "Remove.bg", category: "image", url: "https://www.remove.bg", free: true, rating: 4},
-  {name: "Cleanup.pictures", category: "image", url: "https://cleanup.pictures", free: true, rating: 4},
-  {name: "Kive", category: "moodboard", url: "https://www.kive.ai", free: true, rating: 4},
-  {name: "Lensa", category: "image", url: "https://www.lensa.ai", free: true, rating: 4},
-  {name: "Shutterstock AI", category: "image", url: "https://www.shutterstock.com", free: false, rating: 4},
-  {name: "Artbreeder", category: "image", url: "https://www.artbreeder.com", free: true, rating: 4},
-  {name: "Runway", category: "video", url: "https://runwayml.com", free: false, rating: 4},
-  {name: "Fotor", category: "image", url: "https://www.fotor.com", free: true, rating: 3},
-  {name: "Fritz AI", category: "image", url: "https://fritz.ai", free: false, rating: 4},
-  {name: "Whisper", category: "audio", url: "https://openai.com/research/whisper", free: true, rating: 5},
-  {name: "AIVA", category: "audio", url: "https://www.aiva.ai", free: false, rating: 4},
-  {name: "Descript Overdub", category: "audio", url: "https://www.descript.com/overdub", free: false, rating: 4},
-  {name: "SoundHound", category: "audio", url: "https://www.soundhound.com", free: true, rating: 4},
-  {name: "Sonantic", category: "audio", url: "https://www.sonantic.com", free: false, rating: 5},
-  {name: "Pexels AI", category: "image", url: "https://www.pexels.com", free: true, rating: 5},
-  {name: "Deep Dream Generator", category: "image", url: "https://deepdreamgenerator.com", free: true, rating: 4},
-  {name: "Runway", category: "video", url: "https://www.runwayml.com", free: false, rating: 4},
-  {name: "Stability AI", category: "image", url: "https://stability.ai", free: true, rating: 5},
-  {name: "Fotor AI", category: "image", url: "https://www.fotor.com", free: true, rating: 4},
-  {name: "Hugging Face", category: "text", url: "https://huggingface.co", free: true, rating: 5},
-  {name: "Veed", category: "video", url: "https://www.veed.io", free: true, rating: 4},
-  {name: "Runway ML", category: "video", url: "https://runwayml.com", free: false, rating: 5},
-  {name: "Pexels AI", category: "image", url: "https://www.pexels.com", free: true, rating: 4},
-  {name: "Copy.ai", category: "text", url: "https://www.copy.ai", free: true, rating: 4},
-  {name: "Notion AI", category: "productivity", url: "https://www.notion.so/product/ai", free: true, rating: 5},
-  {name: "AI Dungeon", category: "text", url: "https://play.aidungeon.io", free: true, rating: 5},
-  {name: "Synthesia", category: "video", url: "https://www.synthesia.io", free: false, rating: 4},
-  {name: "Piktochart", category: "design", url: "https://piktochart.com", free: true, rating: 4},
-  {name: "Fotor", category: "image", url: "https://www.fotor.com", free: true, rating: 4},
-  {name: "Copy.ai", category: "text", url: "https://www.copy.ai", free: true, rating: 4},
-  {name: "Jarvis AI", category: "text", url: "https://www.jasper.ai", free: false, rating: 5},
-  {name: "Designify", category: "design", url: "https://www.designify.com", free: true, rating: 5},
-  {name: "DeepAI", category: "image", url: "https://deepai.org", free: true, rating: 5},
-  {name: "Runway ML", category: "video", url: "https://runwayml.com", free: false, rating: 5},
-  {name: "Deep Dream Generator", category: "image", url: "https://deepdreamgenerator.com", free: true, rating: 4},
-  {name: "Lumen5", category: "video", url: "https://www.lumen5.com", free: true, rating: 5},
-  {name: "ChatGPT", category: "text", url: "https://chat.openai.com", free: true, rating: 5},
-  {name: "Pictory", category: "video", url: "https://pictory.ai", free: true, rating: 5},
-  {name: "NightCafe", category: "image", url: "https://creator.nightcafe.studio", free: true, rating: 4},
-  {name: "Runway", category: "video", url: "https://www.runwayml.com", free: false, rating: 5},
-  {name: "Remove.bg", category: "image", url: "https://www.remove.bg", free: true, rating: 4},
-  {name: "Fotor", category: "image", url: "https://www.fotor.com", free: true, rating: 5},
-  {name: "Scribbr AI", category: "text", url: "https://www.scribbr.com", free: false, rating: 4},
-  {name: "Whisper", category: "audio", url: "https://openai.com/research/whisper", free: true, rating: 5},
-  {name: "Lensa AI", category: "image", url: "https://www.lensa.ai", free: true, rating: 4},
-  {name: "BigGAN", category: "image", url: "https://deepai.org/machine-learning-model/biggan", free: true, rating: 4},
-  {name: "GPT-3", category: "text", url: "https://beta.openai.com", free: false, rating: 5},
-  {name: "Tome", category: "text", url: "https://tome.app", free: true, rating: 4},
-  {name: "Notion AI", category: "productivity", url: "https://www.notion.so/product/ai", free: true, rating: 5},
-  {name: "StyleGAN", category: "image", url: "https://www.artbreeder.com", free: true, rating: 5},
-  {name: "Artbreeder", category: "image", url: "https://www.artbreeder.com", free: true, rating: 4},
-  {name: "Play.ht", category: "audio", url: "https://play.ht", free: false, rating: 5},
-  {name: "RunwayML", category: "video", url: "https://runwayml.com", free: false, rating: 5},
-  {name: "Google AI", category: "text", url: "https://ai.google", free: false, rating: 5},
-  {name: "DeepMind", category: "AI Research", url: "https://deepmind.com", free: false, rating: 5},
-  {name: "Google Translate", category: "text", url: "https://translate.google.com", free: true, rating: 5},
-  {name: "DeepAI", category: "image", url: "https://deepai.org", free: true, rating: 5},
-  {name: "Runway", category: "video", url: "https://runwayml.com", free: true, rating: 5},
-  {name: "Grammarly", category: "text", url: "https://www.grammarly.com", free: true, rating: 5},
-  {name: "AI Dungeon", category: "text", url: "https://play.aidungeon.io", free: true, rating: 5},
-  {name: "Replika", category: "chatbot", url: "https://replika.ai", free: true, rating: 4},
-  {name: "Jasper", category: "text", url: "https://www.jasper.ai", free: true, rating: 4},
-];
-
-
-    function renderNetworks(query = '') {
-      const container = document.getElementById('networkList');
-      container.innerHTML = '';
-      const freeOnly = document.getElementById('freeOnly').checked;
-      const paidOnly = document.getElementById('paidOnly').checked;
-
-      let filtered = networks.filter(net => net.name.toLowerCase().includes(query.toLowerCase()));
-      if (freeOnly) filtered = filtered.filter(n => n.free);
-      if (paidOnly) filtered = filtered.filter(n => !n.free);
-
-      filtered.forEach((net, i) => {
-        const card = document.createElement('div');
-        card.className = 'card fade-in';
-        card.style.animationDelay = `${i * 0.1}s`;
-        card.innerHTML = `
-          <h3>${net.name}</h3>
-          <p>Type: ${net.category}</p>
-          <p class="rating">${'★'.repeat(net.rating)}${'☆'.repeat(5 - net.rating)}</p>
-        `;
-        card.onclick = () => window.open(net.url, '_blank');
-        container.appendChild(card);
-      });
-    }
-
-    document.getElementById('searchInput').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') renderNetworks(e.target.value);
-    });
-
-    // Language switcher logic
-    const langStrings = {
-      en: { title: "AI Network Finder", popular: "Most Popular Neural Networks" },
-      de: { title: "KI-Netzwerk Finder", popular: "Beliebteste KI-Netzwerke" },
-      uk: { title: "Пошук нейромереж", popular: "Найпопулярніші нейромережі" },
-      fr: { title: "Chercheur de Réseau IA", popular: "Réseaux IA les Plus Populaires" },
-      zh: { title: "AI 网络查找器", popular: "最受欢迎的神经网络" },
-      ja: { title: "AI ネットワークファインダー", popular: "最も人気のあるニューラルネットワーク" }
-    };
-
-    function changeLanguage(lang) {
-      document.getElementById('title').textContent = langStrings[lang].title;
-      document.querySelector('h2').textContent = langStrings[lang].popular;
-    }
-
-    document.querySelectorAll('.language-switcher button').forEach(button => {
-      button.addEventListener('click', () => {
-        const lang = button.getAttribute('data-lang');
-        changeLanguage(lang);
-      });
-    });
-
-    renderNetworks();
-  </script>
-</body>
+      // Initial display
+      displayNetworks(networks);
+    </script>
+  </body>
 </html>
